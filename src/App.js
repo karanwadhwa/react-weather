@@ -6,10 +6,10 @@ import SearchBar from './containers/SearchBar';
 class App extends Component {
   render() {
     return (
-      <html>
-      <SearchBar />
-      <p>React-weather-app</p>
-      </html>
+      <div className='container'>
+        <SearchBar />
+        <p>React-weather-app</p>
+      </div>
     );
   }
 }
