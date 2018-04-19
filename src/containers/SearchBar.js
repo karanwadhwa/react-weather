@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { fetchWeather } from '../actions';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -6,15 +10,23 @@ class SearchBar extends React.Component {
 
     this.state={searchTerm:''}
     this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   onInputChange(event) {
     this.setState({ searchTerm: event.target.value });
   }
 
+  onFormSubmit(event) {
+    event.preventDefault();
+
+    this.props.fetchWeather(this.state.searchTerm);
+    this.setState({searchTerm: ''});
+  }
+
   render() {
     return(
-      <form className='input-group'>
+      <form className='input-group' onSubmit={this.onFormSubmit}>
         <input
           placeholder='Enter a City Name'
           className='form-control'
@@ -33,4 +45,8 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({fetchWeather}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(SearchBar);
